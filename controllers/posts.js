@@ -1,6 +1,4 @@
 import Post from '../models/post.js'
-import mongoose from 'mongoose'
-import { userExtractor } from '../utils/middleware'
 
 // get all posts
 export const getPosts = async (req, res) => {
