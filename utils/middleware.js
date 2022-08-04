@@ -2,13 +2,14 @@ import { request } from 'express'
 import jwt, { decode } from 'jsonwebtoken'
 import User from '../models/user.js'
 
-const userExtractor = async (req, res, next) => {
-  req.user = null
-  const decodedToken = jwt.verify(req.token, process.env.SECRET)
-
-  if (!req.token || !decodedToken.id) {
-    return res.status(401).json({error: 'token missing or invalid'})
+export const userExtractor = async (req, res, next) => {
+  const {authorization} = req.headers
+  if (!authorization) {
+    return res.status(401).json({error: 'Authorization token required'})
   }
+
+  const token = authorization.split(' ')[1]
+  const decodedToken = jwt.verify(token, process.env.SECRET)
 
   req.user = await User.findById(decodedToken.id)
   return next()

@@ -1,13 +1,13 @@
 import User from '../models/user.js'
 import bcrypt from 'bcrypt'
 
-// get all posts
+// get all users
 export const getUsers = async (req, res) => {
   const users = await User.find({})
   res.status(200).json(users)
 }
 
-// get single post
+// get single user
 export const getUser = async (req, res) => {
   const user = await User.findById(req.params.id)
   if (user) {
